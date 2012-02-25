@@ -16,11 +16,19 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+		'application.modules.user.models.*',
+		'application.modules.user.components.*',
 	),
-
+		
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool
-		
+	    'user' => array(
+	        // названия таблиц взяты по умолчанию, их можно изменить
+	        'tableUsers' => 'tbl_users',
+	        'tableProfiles' => 'tbl_profiles',
+	        'tableProfileFields' => 'tbl_profiles_fields',
+	    ),
+					
 		'gii'=>array(
 			'class'=>'system.gii.GiiModule',
 			'password'=>'12345',
@@ -35,6 +43,7 @@ return array(
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
+            'loginUrl' => array('/user/login'),
 		),
 		// uncomment the following to enable URLs in path-format
 		/*
