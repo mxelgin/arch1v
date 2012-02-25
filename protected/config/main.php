@@ -18,6 +18,8 @@ return array(
 		'application.components.*',
 		'application.modules.user.models.*',
 		'application.modules.user.components.*',
+		'application.modules.rights.*',
+		'application.modules.rights.components.*', 
 	),
 		
 	'modules'=>array(
@@ -35,15 +37,20 @@ return array(
 		 	// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
 		),
-		
+		'rights',		
 	),
 
 	// application components
 	'components'=>array(
 		'user'=>array(
 			// enable cookie-based authentication
+			'class'=>'RWebUser',
 			'allowAutoLogin'=>true,
             'loginUrl' => array('/user/login'),
+		),
+		'authManager'=>array( 
+			'class'=>'RDbAuthManager',
+			'defaultRoles' => array('Guest') // дефолтная роль
 		),
 		// uncomment the following to enable URLs in path-format
 		/*
