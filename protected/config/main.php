@@ -25,7 +25,7 @@ return array(
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool
 	    'user' => array(
-	        // названия таблиц взяты по умолчанию, их можно изменить
+	        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	        'tableUsers' => 'tbl_users',
 	        'tableProfiles' => 'tbl_profiles',
 	        'tableProfileFields' => 'tbl_profiles_fields',
@@ -39,7 +39,7 @@ return array(
 		),
 		'rights',		
 	),
-
+		'language'=>'ru',
 	// application components
 	'components'=>array(
 		'user'=>array(
@@ -50,7 +50,7 @@ return array(
 		),
 		'authManager'=>array( 
 			'class'=>'RDbAuthManager',
-			'defaultRoles' => array('Guest') // дефолтная роль
+			'defaultRoles' => array('Guest') // 
 		),
 		// uncomment the following to enable URLs in path-format
 		/*

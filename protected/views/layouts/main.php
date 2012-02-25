@@ -33,7 +33,7 @@
 				array('label'=>'Contact', 'url'=>array('/site/contact')),
 //				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 //				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
-				array('url'=>array(Yii::app()->getModule('rights')->baseUrl), 'label'=>'Rights', 'visible'=>!Yii::app()->user->isGuest),
+				array('url'=>array(Yii::app()->getModule('rights')->baseUrl), 'label'=>Rights::t('core', 'Rights'), 'visible'=>!Yii::app()->user->isGuest),
 										
 				array('url'=>Yii::app()->getModule('user')->loginUrl, 'label'=>Yii::app()->getModule('user')->t("Login"), 'visible'=>Yii::app()->user->isGuest),
 				array('url'=>Yii::app()->getModule('user')->registrationUrl, 'label'=>Yii::app()->getModule('user')->t("Register"), 'visible'=>Yii::app()->user->isGuest),
