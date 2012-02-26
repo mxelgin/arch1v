@@ -7,7 +7,8 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'My Web Application',
+	'language'=>'ru',
+	'name'=> 'Archive KV',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
@@ -25,7 +26,6 @@ return array(
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool
 	    'user' => array(
-	        // �������� ������ ����� �� ���������, �� ����� ��������
 	        'tableUsers' => 'tbl_users',
 	        'tableProfiles' => 'tbl_profiles',
 	        'tableProfileFields' => 'tbl_profiles_fields',
@@ -39,7 +39,6 @@ return array(
 		),
 		'rights',		
 	),
-		'language'=>'ru',
 	// application components
 	'components'=>array(
 		'user'=>array(
