@@ -3,6 +3,24 @@
 class DefaultController extends Controller
 {
 	
+	// Добавил заглушку 
+	
+	public function filters()
+	{
+		return CMap::mergeArray(parent::filters(),array(
+			'accessControl', // perform access control for CRUD operations
+		));
+	}
+	
+	public function accessRules()
+	{
+		return array(
+            array('deny',
+                'actions'=>array('index'),
+                'users'=>array('?'),
+            ),
+		);
+	}	
 	/**
 	 * Lists all models.
 	 */
