@@ -12,12 +12,12 @@ $this->breadcrumbs=array(
 <?php
 	$this->widget('zii.widgets.CMenu',array(
 		'items'=>array(
-				array('label'=>'weeknum', 'url'=>array('/weeknum/index')),
+				array('label'=>'Менеджер недели', 'url'=>array('/weeknum/index')),
+				array('label'=>'Кассовая Ведомость', 'url'=>array('/kv/index')),
 				array('label'=>'mgrday', 'url'=>array('/mgrday/index')),
 				array('label'=>'kassday', 'url'=>array('/kassday/index')),
 				array('label'=>'operdate', 'url'=>array('/operdate/index')),
 //				array('label'=>'operation', 'url'=>array('/operation/index')),
-				array('label'=>'Кассовая Ведомость', 'url'=>array('/kv/index')),
 		),
 	)); 
 

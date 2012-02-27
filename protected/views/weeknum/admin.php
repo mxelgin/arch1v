@@ -1,6 +1,7 @@
 <?php
 $this->breadcrumbs=array(
-	'Weeknums'=>array('index'),
+	Yii::t('core','Journal')=>array('journal/index'),
+	Yii::t('core','Weeknum')=>array('index'),
 	'Manage',
 );
 
@@ -47,6 +48,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'year',
 		'openweekdate',
 		'closeweekdate',
+		'userid',
 		array(
 			'class'=>'CButtonColumn',
 		),

@@ -9,6 +9,12 @@
  * @property string $year
  * @property string $openweekdate
  * @property string $closeweekdate
+ * @property integer $userid
+ *
+ * The followings are the available model relations:
+ * @property Users $user
+ * @property Operdate $openweekdate0
+ * @property Operdate $closeweekdate0
  */
 class Weeknum extends CActiveRecord
 {
@@ -38,12 +44,12 @@ class Weeknum extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('weeknum, year, openweekdate, closeweekdate', 'required'),
-			array('weeknum', 'numerical', 'integerOnly'=>true),
+			array('weeknum, year, openweekdate, closeweekdate, userid', 'required'),
+			array('weeknum, userid', 'numerical', 'integerOnly'=>true),
 			array('year', 'length', 'max'=>4),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, weeknum, year, openweekdate, closeweekdate', 'safe', 'on'=>'search'),
+			array('id, weeknum, year, openweekdate, closeweekdate, userid', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -55,6 +61,9 @@ class Weeknum extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'user' => array(self::BELONGS_TO, 'Users', 'userid'),
+			'openweekdate0' => array(self::BELONGS_TO, 'Operdate', 'openweekdate'),
+			'closeweekdate0' => array(self::BELONGS_TO, 'Operdate', 'closeweekdate'),
 		);
 	}
 
@@ -65,10 +74,11 @@ class Weeknum extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'weeknum' => 'Weeknum',
-			'year' => 'Year',
-			'openweekdate' => 'Openweekdate',
-			'closeweekdate' => 'Closeweekdate',
+			'weeknum' => 'Номер недели',
+			'year' => 'Год',
+			'openweekdate' => 'Дата открытия недели',
+			'closeweekdate' => 'Дата закрытия недели',
+			'userid' => 'Менеджер недели',
 		);
 	}
 
@@ -88,14 +98,10 @@ class Weeknum extends CActiveRecord
 		$criteria->compare('year',$this->year,true);
 		$criteria->compare('openweekdate',$this->openweekdate,true);
 		$criteria->compare('closeweekdate',$this->closeweekdate,true);
+		$criteria->compare('userid',$this->userid);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
-	}
-	
-	public function week()
-	{
-		
 	}
 }

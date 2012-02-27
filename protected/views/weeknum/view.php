@@ -1,6 +1,7 @@
 <?php
 $this->breadcrumbs=array(
-	'Weeknums'=>array('index'),
+	Yii::t('core','Journal')=>array('journal/index'),
+	Yii::t('core','Weeknum')=>array('index'),
 	$model->id,
 );
 
@@ -18,10 +19,27 @@ $this->menu=array(
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
+//		'id:text:Country Code',
 		'id',
 		'weeknum',
 		'year',
-		'openweekdate',
-		'closeweekdate',
+//		'openweekdate',
+			array(
+					'label'=>'Дата открытия недели',
+					'type'=>'raw',
+					'value'=>date('d-m-Y',strtotime($model->openweekdate)),
+			),
+			array(
+					'label'=>'Дата закрытия недели',
+					'type'=>'raw',
+					'value'=>date('d-m-Y',strtotime($model->closeweekdate)),
+			),
+//		'closeweekdate',
+//		'userid',
+ 			array(
+ 					'label'=>'Менеджер недели',
+ 					'type'=>'raw',
+ 					'value'=> VUsers::model()->findByAttributes(array('id'=>$model->userid))->fullname,
+ 					),
 	),
 )); ?>

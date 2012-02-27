@@ -18,5 +18,12 @@ return array(
 		'/vendors',
 		'/web/js',
 		'/modules',	
+	 	'/data',
+//			'/views/weeknum',
+//			'/views/site',
+//				'/views/operdate',
+				'/views/layouts',
+//				'/views/kv',
+//			'/views/journal',
 	),
 );

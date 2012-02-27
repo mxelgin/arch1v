@@ -13,12 +13,15 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('openweekdate')); ?>:</b>
-	<?php echo CHtml::encode($data->openweekdate); ?>
+	<?php echo CHtml::encode(Yii::app()->dateFormatter->format('dd-MM-yyyy',$data->openweekdate)); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('closeweekdate')); ?>:</b>
-	<?php echo CHtml::encode($data->closeweekdate); ?>
+	<?php echo CHtml::encode(Yii::app()->dateFormatter->format('dd-MM-yyyy',$data->closeweekdate)); ?>
 	<br />
 
-
+	<b><?php echo CHtml::encode($data->getAttributeLabel('userid')); ?>:</b>
+	<?php //echo CHtml::encode(User::model()->findByPk($data->userid)->username); ?>
+	<?php echo VUsers::model()->findByAttributes(array('id'=>$data->userid))->fullname; ?>
+	<br />
 </div>

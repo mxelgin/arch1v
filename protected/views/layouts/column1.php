@@ -2,4 +2,7 @@
 <div id="content">
 	<?php echo $content; ?>
 </div><!-- content -->
+
+<?php $this->widget('Calendar'); ?>
+
 <?php $this->endContent(); ?>

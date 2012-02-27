@@ -2,13 +2,7 @@
 class KvForm extends CFormModel
 {
 	public $week;
-	public $operation1;
-	public $operation2;
-	public $operation3;
-	public $operation4;
-	public $operation5;
-	public $operation6;
-	public $operation7;
+	public $arr;
 	
 	public static function model($className=__CLASS__)
 	{
@@ -31,18 +25,11 @@ class KvForm extends CFormModel
 	{
 		for ($i = $weeknum->openweekdate; $i <= $weeknum->closeweekdate; $i++)
 		{
-			$oper = Operation::model()->findByAttributes(array('id'=>$i));
+			//day of week
 			$numday = date("N", strtotime($i));
-			switch ($numday)
-			{
-				case 1:  $this -> operation1 = $oper;break;
-				case 2:  $this -> operation2 = $oper;break;
-				case 3:  $this -> operation3 = $oper;break;
-				case 4:  $this -> operation4 = $oper;break;
-				case 5:  $this -> operation5 = $oper;break;
-				case 6:  $this -> operation6 = $oper;break;
-				case 7:  $this -> operation7 = $oper;break;
-			}
+			$oper = Operation::model()->findByAttributes(array('id'=>$i));
+			
+			$this->arr[$numday]=$oper;
 		}
 	}
 	
@@ -54,12 +41,70 @@ class KvForm extends CFormModel
 	}
 	public function getBeginWeek()
 	{
-		return $this-> week -> openweekdate;
+		return  date("d.m.Y", strtotime($this-> week -> openweekdate));
 	}
 	
 	public function getEndWeek()
 	{
-		return $this-> week -> openweekdate;
+		return  date("d.m.Y", strtotime($this-> week -> closeweekdate));
 	}
+	
+	public function getDay($id)
+	{
+		return $this->arr[$id];
+	}
+	
+	public function sumItog()
+	{
+		$sum = 0;
+		foreach ($this->arr as $key => $value)	
+		{
+			$sum = $value->itog + $sum ;
+		}		
+		return $sum;
+	}
+	
+	public function sumDrugoePrihod()
+	{
+		$sum = 0;
+		foreach ($this->arr as $key => $value)
+		{
+			$sum = $value->drugoeprixod + $sum ;
+		}
+		return $sum;
+	}	
+
+	public function sumRashod()
+	{
+		$sum = 0;
+		foreach ($this->arr as $key => $value)
+		{
+			$sum = $value->rashod + $sum ;
+		}
+		return $sum;
+	}
+	
+	public function sumDrugoeRashod()
+	{
+		$sum = 0;
+// 		foreach ($this->arr as $key => $value)
+// 		{
+// 			$sum = $value->rashod + $sum ;
+// 		}
+		return $sum;
+	}	
+	public function sumBalancePrihod()
+	{
+		return $this->sumItog()+$this->sumDrugoePrihod()+$this->arr[1]->beginostatok;
+	}	
+	public function sumBalanceRashod()
+	{
+		return $this->sumRashod()+$this->sumDrugoeRashod()+$this->arr[7]->endostatok;
+	}
+	public function sumBalanceOstatok()
+	{
+		return $this->sumBalancePrihod()-$this->sumBalanceRashod();
+	}
+	
 }
 

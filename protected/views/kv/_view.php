@@ -1,12 +1,11 @@
 
 <div class="view">
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
-	<?php echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('weeknum')); ?>:</b>
-	<?php echo CHtml::encode($data->weeknum); ?>
+	<b>
+	<?php 
+		$k = Yii::t('core','Kv');
+		$k = "{$k} №{$data->weeknum}";
+		echo CHtml::link(CHtml::encode($k), array('view', 'id'=>$data->id)); ?></b>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('year')); ?>:</b>

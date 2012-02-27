@@ -52,6 +52,7 @@ class WeeknumController extends Controller
 	{
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
+//			'listUser'=>User::model()->findAll(),				
 		));
 	}
 
@@ -75,6 +76,7 @@ class WeeknumController extends Controller
 
 		$this->render('create',array(
 			'model'=>$model,
+			'listUser'=>VUsers::model()->findAll(),				
 		));
 	}
 
@@ -96,9 +98,10 @@ class WeeknumController extends Controller
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
-
+		
 		$this->render('update',array(
 			'model'=>$model,
+			'listUser'=>VUsers::model()->findAll(),				
 		));
 	}
 

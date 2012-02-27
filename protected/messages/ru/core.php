@@ -19,6 +19,7 @@
  * @version $Id: $
  */
 return array (
+  'Weeknum' => 'Менеджер недели',
   'Archive KV' => 'Архив КВ',
   'Journal' => 'Журнал',
   'Kv' => 'Кассовая ведомость',

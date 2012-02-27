@@ -1,6 +1,7 @@
 <?php
 $this->breadcrumbs=array(
-	'Weeknums',
+	Yii::t('core','Journal')=>array('journal/index'),
+	Yii::t('core','Weeknum'),
 );
 
 $this->menu=array(

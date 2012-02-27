@@ -7,6 +7,22 @@ class JournalController extends Controller
 		$this->render('index');
 	}
 
+    public function filters()
+    {
+        return array(
+            'accessControl',
+        );
+    }
+	
+	public function accessRules()
+	{
+        return array(
+            array('deny',
+                'actions'=>array('index'),
+                'users'=>array('?'),
+            ),
+        );
+	}
 	// Uncomment the following methods and override them if needed
 	/*
 	public function filters()
