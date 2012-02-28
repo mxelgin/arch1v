@@ -42,9 +42,9 @@ $this->breadcrumbs=array(
 	</tr>
 	<tr>
 		<td colspan="9">Остаток на начало недели</td>
-		<td><?php echo $model->getDay(1)->beginostatok; ?></td>
+		<td><?php echo $model->getDay($model->week->openweekdate)->beginostatok; ?></td>
 		<td></td>
-		<td></td>
+		<td><?php echo $model->week->userid==0?'':VUsers::model()->findByAttributes(array('id'=>$model->week->userid))->fullname; ?></td>
 	</tr>
 <?php 
 	foreach ($model->arr as $key=>$value)
@@ -53,7 +53,9 @@ $this->breadcrumbs=array(
 	<tr>
 		<td><?php echo date("D",strtotime($value->operdate)); ?></td>
 		<td><?php echo date("d.m.Y", strtotime($value->operdate)); ?></td>
-		<td><?php echo $value->mgr1id; echo '/'; echo $value->mgr2id; ?></td>
+		<td><?php echo ($value->mgr1id==0?'NULL':VUsers::model()->findByAttributes(array('id'=>$value->mgr1id))->fullname)
+					   ." / ".
+		               ($value->mgr2id==0?'NULL':VUsers::model()->findByAttributes(array('id'=>$value->mgr2id))->fullname); ?></td>
 		<td><?php echo $value->prixod; ?></td>
 		<td><?php echo $value->vozvrat; ?></td>
 		<td><?php echo $value->itog; ?></td>
@@ -69,7 +71,7 @@ $this->breadcrumbs=array(
 ?>	
 	<tr>
 		<td colspan="9">Остаток на конец недели</td>
-		<td><?php echo $model->getDay(7)->endostatok; ?></td>
+		<td><?php echo $model->getDay($model->week->closeweekdate)->endostatok; ?></td>
 		<td></td>
 		<td></td>
 	</tr>
@@ -88,7 +90,7 @@ $this->breadcrumbs=array(
 		<td colspan="2"><?php echo $model->sumBalancePrihod(); ?></td>
 		<td colspan="2"><?php echo $model->sumBalanceRashod(); ?></td>
 		<td></td>
-		<td><?php echo $model->sumBalanceOstatok(); ?></td>
+		<td><?php //echo $model->sumBalanceOstatok(); ?></td>
 		<td></td>
 	</tr>
 	

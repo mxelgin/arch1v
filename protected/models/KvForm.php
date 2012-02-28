@@ -23,13 +23,22 @@ class KvForm extends CFormModel
 	
 	private function setOperation($weeknum)
 	{
-		for ($i = $weeknum->openweekdate; $i <= $weeknum->closeweekdate; $i++)
+		$closeday = strtotime($weeknum->closeweekdate);
+		$openday = strtotime($weeknum->openweekdate);
+		$sec = $closeday - $openday;
+		$days_diff = $sec / (60*60*24);// необходимо удалить дроби
+		
+//		for ($i = $weeknum->openweekdate; $i <= $weeknum->closeweekdate; $i++)
+		for ($i = 0; $i <= $days_diff; $i++)
 		{
 			//day of week
-			$numday = date("N", strtotime($i));
-			$oper = Operation::model()->findByAttributes(array('id'=>$i));
+			$date = new DateTime($weeknum->openweekdate);
+			$date->modify('+'.$i.'day');
+			$nextday = $date->format('Y-m-d');
 			
-			$this->arr[$numday]=$oper;
+			$oper = Operation::model()->findByAttributes(array('id'=>$nextday));
+			
+			$this->arr[$nextday]=$oper;
 		}
 	}
 	
@@ -95,11 +104,11 @@ class KvForm extends CFormModel
 	}	
 	public function sumBalancePrihod()
 	{
-		return $this->sumItog()+$this->sumDrugoePrihod()+$this->arr[1]->beginostatok;
+		return $this->sumItog()+$this->sumDrugoePrihod()+$this->getDay($this->week->openweekdate)->beginostatok;
 	}	
 	public function sumBalanceRashod()
 	{
-		return $this->sumRashod()+$this->sumDrugoeRashod()+$this->arr[7]->endostatok;
+		return $this->sumRashod()+$this->sumDrugoeRashod()+$this->getDay($this->week->openweekdate)->endostatok;
 	}
 	public function sumBalanceOstatok()
 	{

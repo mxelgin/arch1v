@@ -20,5 +20,8 @@
 	<?php echo CHtml::encode($data->closeweekdate); ?>
 	<br />
 
-
+	<b><?php echo CHtml::encode($data->getAttributeLabel('userid')); ?>:</b>
+	<?php echo VUsers::model()->findByAttributes(array('id'=>$data->userid))->fullname; ?>
+	<br />
+	
 </div>
