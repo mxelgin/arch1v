@@ -43,7 +43,45 @@ class ContactController extends Controller
 			),
 		);
 	}
-
+	
+	public function actionIndex()
+	{
+		$model = new Contact();
+		
+		$criteria = new CDbCriteria();
+		$criteria->distinct=true;
+		$criteria->select=array('name,level,codeId');
+		$criteria->addCondition('codeId<>0');
+		$listLabel = $model->findAll($criteria);
+		
+		$listMenu1[] = array('label'=>'Все', 'url'=>array('contact/index'), 'active'=>!isset($_GET['id']));
+		foreach($listLabel as $label)
+		{
+			if ($label->level == 1)
+			$listMenu1[] = array(
+					'label'=>$label->name, 
+					'url'=>array('contact/index&id='.$label->codeId),
+					'active'=>isset($_GET['id'])?$_GET['id']==$label->codeId:false,
+			);
+		}
+		$listMenu2[] = array('label'=>'Все', 'url'=>array('contact/index'), 'active'=>!isset($_GET['id']));
+		foreach($listLabel as $label)
+		{
+			if ($label->level == 2)
+			$listMenu2[] = array(
+					'label'=>$label->name,
+					'url'=>array('contact/index&id='.$label->codeId),
+					'active'=>isset($_GET['id'])?$_GET['id']==$label->codeId:false,
+			);
+		}
+		
+		$this->render('index',array(
+				'model'=>$model,
+				'menu1'=>$listMenu1,
+				'menu2'=>$listMenu2,
+		));
+	}
+	
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
@@ -62,14 +100,20 @@ class ContactController extends Controller
 	public function actionCreate()
 	{
 		$model=new Contact;
-
+// 		$parent = $model->getParent();
+// 		if (isset($parent))
+// 			$model->parentId = $parent->id;
+		
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['Contact']))
 		{
 			$model->attributes=$_POST['Contact'];
-			if($model->save())
+			$root=Contact::model()->findByPk($model->parentId);
+			if($root!=null)
+				$model->appendTo($root);
+			if($model->saveNode())
 				$this->redirect(array('view','id'=>$model->id));
 		}
 
@@ -77,7 +121,7 @@ class ContactController extends Controller
 			'model'=>$model,
 		));
 	}
-
+	
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
@@ -86,6 +130,9 @@ class ContactController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
+		$parent = $model->getParent();
+		if (isset($parent))
+			$model->parentId = $parent->id;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -93,13 +140,21 @@ class ContactController extends Controller
 		if(isset($_POST['Contact']))
 		{
 			$model->attributes=$_POST['Contact'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+			$root=Contact::model()->findByPk($model->parentId);
+//			if (length($model->parentId)<>0)
+			if($root===null)
+				$model->isRoot()?'':$model->moveAsRoot();
+			else
+				$model->moveAsLast($root);
+				
+ 			if($model->saveNode())
+ 				$this->redirect(array('index','id'=>$model->id));
 		}
 
 		$this->render('update',array(
-			'model'=>$model,
+				'model'=>$model,
 		));
+			
 	}
 
 	/**
@@ -112,7 +167,7 @@ class ContactController extends Controller
 		if(Yii::app()->request->isPostRequest)
 		{
 			// we only allow deletion via POST request
-			$this->loadModel($id)->delete();
+			$this->loadModel($id)->deleteNode();
 
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 			if(!isset($_GET['ajax']))
@@ -122,16 +177,21 @@ class ContactController extends Controller
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
 
-	/**
-	 * Lists all models.
-	 */
-	public function actionIndex()
-	{
-		$dataProvider=new CActiveDataProvider('Contact');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
-	}
+// 	/**
+// 	 * Lists all models.
+// 	 */
+// 	public function actionIndex()
+// 	{
+// 		$dataProvider=new CActiveDataProvider('Contact',array(
+// 			'pagination'=>array(
+//         		'pageSize'=>5,
+// 			),
+// 		));
+				
+// 		$this->render('index',array(
+// 			'dataProvider'=>$dataProvider,
+// 		));
+// 	}
 
 	/**
 	 * Manages all models.

@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
 	'Contacts'=>array('index'),
-	$model->id,
+	$model->name,
 );
 
 $this->menu=array(
@@ -19,5 +19,9 @@ $this->menu=array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id',
+		'name',
+		'short_name',
+		'phone',
+		'codeId',
 	),
 )); ?>
